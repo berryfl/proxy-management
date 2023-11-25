@@ -19,9 +19,10 @@ import (
 	"net/http"
 
 	"cloud.google.com/go/logging"
+	"github.com/gorilla/mux"
 )
 
-func (a *App) Handler(w http.ResponseWriter, r *http.Request) {
+func (a *App) IndexHandler(w http.ResponseWriter, r *http.Request) {
 	a.log.Log(logging.Entry{
 		Severity: logging.Info,
 		HTTPRequest: &logging.HTTPRequest{
@@ -31,4 +32,10 @@ func (a *App) Handler(w http.ResponseWriter, r *http.Request) {
 		Payload: "Structured logging example.",
 	})
 	fmt.Fprintf(w, "Hello World!\n")
+}
+
+func (a *App) HelloHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "Hello %v!\n", vars["name"])
 }

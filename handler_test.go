@@ -44,7 +44,7 @@ func TestHandler(t *testing.T) {
 		log: client.Logger("test-log", logging.RedirectAsJSON(os.Stderr)),
 	}
 
-	app.Handler(rr, req)
+	app.IndexHandler(rr, req)
 	if rr.Code != http.StatusOK {
 		t.Errorf("Code = %d, want %d", rr.Code, http.StatusOK)
 	}
